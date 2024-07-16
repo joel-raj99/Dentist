@@ -1,0 +1,14 @@
+.container{
+   
+    display: flex;
+    height:100vh;
+
+}
+.menu{
+    position:fixed;
+}
+.content{
+    flex:3;
+    padding:1px;
+    
+}

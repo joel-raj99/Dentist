@@ -1,0 +1,21 @@
+.container{
+    position:fixed;
+   
+    flex-direction: row ;
+    height:50px;
+    width:87%;
+    margin-left:188px;
+    margin-top:-1px;
+    background-color:lightgray;
+    z-index:5;
+}
+.title{
+   
+    font-weight: 200;
+    text-transform: uppercase;
+    margin-top:5px;
+    margin-left:40px;
+    
+
+}
+

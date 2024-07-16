@@ -1,0 +1,28 @@
+.container {
+  position: fixed;
+  min-height:100%; /* Set the height to 800 pixels */
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.userImage {
+
+  object-fit: cover;
+  margin:20px;
+}
+
+.list{
+    list-style:none;
+    
+}
+.cat{
+    color:black;
+    font-weight:bold;
+    margin:10px 0px;
+    padding-left:10px;
+    
+    
+}
