@@ -56,7 +56,7 @@ const PatientSchema = new Schema({
     timestamps: true // This will add createdAt and updatedAt fields
 });
 
-PatientSchema.index({ patientID: 1, name: 1 }, { unique: true });
+
 
 const PatientModel = models.Patient || model('Patient', PatientSchema);
 

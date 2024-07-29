@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-
+import { MdOutlineBrowserUpdated } from "react-icons/md";
 export default function ClinicSettings() {
   // State variables
   const [sidebarColor, setSidebarColor] = useState('#ffffff');
@@ -150,12 +150,13 @@ export default function ClinicSettings() {
         <div className="flex justify-end col-span-3">
           <button
             type="submit"
-            className="px-4 py-2 font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"aa
-            aria-label="Update Settings"
+            className="flex items-center p-1 text-white bg-green-600"            aria-label="Update Settings"
           >
-            Update
+           <MdOutlineBrowserUpdated className="mr-2 ml-2" /> Save
           </button>
         </div>
+
+     
       </form>
     </div>
   );

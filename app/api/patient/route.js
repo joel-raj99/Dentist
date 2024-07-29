@@ -1,6 +1,6 @@
 "use server"
-import connectDB from"../../../../utils/mongodb";
-import PatientModel from"../../../../models/Patientmodel"
+import connectDB from"../../../utils/mongodb";
+import PatientModel from"../../../models/Patientmodel";
 import { NextResponse } from "next/server";
 
 

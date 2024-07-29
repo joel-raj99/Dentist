@@ -67,7 +67,7 @@ export default function Navbar() {
         </div>
 
         {/* Centered Search Bar */}
-        <div className="flex justify-center items-center">
+        <div className="flex items-center justify-center">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -80,10 +80,10 @@ export default function Navbar() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="input rounded-full pr-10 h-7 w-full pl-15" // Full width input with padding
+              className="w-full pr-10 input h-7 pl-15" // Full width input with padding
               placeholder="Search"
             />
-            <TbZoom className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            <TbZoom className="absolute text-gray-500 transform -translate-y-1/2 right-3 top-1/2" />
           </form>
         </div>
 
@@ -98,22 +98,22 @@ export default function Navbar() {
               className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
             >
               <div className="card-body">
-                <span className="font-bold text-lg">Event</span>
+                <span className="text-lg font-bold">Event</span>
                 <div className="card-actions">
                   <ul className="space-y-2"> {/* Add margin between list items */}
-                    <li className="flex items-center space-x-2 mt-2">
+                    <li className="flex items-center mt-2 space-x-2">
                       <FaRegHospital />
                       <Link href="../../../Admin-Dashboard/Create-clinic">
                         <p>Add-clinic</p>
                       </Link>
                     </li>
-                    <li className="flex items-center space-x-2 mt-2">
+                    <li className="flex items-center mt-2 space-x-2">
                       <FaUserDoctor />
                       <Link href="../../../Admin-Dashboard/Dentist">
                         <p>Update-Doctor</p>
                       </Link>
                     </li>
-                    <li className="flex items-center space-x-2 mt-2">
+                    <li className="flex items-center mt-2 space-x-2">
                       <FaPersonCirclePlus />
                       <Link href="../../../Admin-Dashboard/Patient-Details">
                         <p>Add-patient</p>
@@ -137,7 +137,7 @@ export default function Navbar() {
               className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
             >
               <div className="card-body">
-                <span className="font-bold text-lg">5 Notifications</span>
+                <span className="text-lg font-bold">5 Notifications</span>
                 <span className="text-info">You have 5 new notifications</span>
                 <div className="card-actions">
                   <button className="btn btn-primary btn-block">View notifications</button>
@@ -149,7 +149,7 @@ export default function Navbar() {
           {/* Profile Icon */}
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full mr-2">
+              <div className="w-10 mr-2 rounded-full">
                 <img
                   alt="Profile"
                   src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"

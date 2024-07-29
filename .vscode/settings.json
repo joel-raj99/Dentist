@@ -1,16 +1,26 @@
 {
     "cSpell.words": [
+        "adminid",
+        "Bioburden",
         "clinicdata",
+        "costof",
         "daisyui",
         "deletedclinic",
+        "doctorid",
+        "Fasciitis",
         "fetchappointments",
+        "Glutaraldehyde",
         "handleappointment",
         "Invisalign",
+        "Iodophors",
+        "loginup",
         "Patientmodel",
         "pincode",
+        "Pulpitis",
         "raquo",
         "setappointments",
         "toastify",
-        "updatedclinic"
+        "updatedclinic",
+        "uuidv"
     ]
 }

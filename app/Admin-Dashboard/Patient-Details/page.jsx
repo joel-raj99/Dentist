@@ -73,10 +73,10 @@ export default function AppointmentList() {
           placeholder="Search appointment..."
           value={searchQuery}
           onChange={handleSearchChange}
-          className="px-4 py-2 border rounded-full bg-slate-200 h-8 text-black pl-5"
+          className="px-4 py-2 border  bg-slate-200 h-8 text-black pl-5"
         />
         <Link href="../../Admin-Dashboard/patient">
-          <button className="bg-black hover:bg-orange-400 text-white font-bold py-2 px-4 rounded-full ml-4 flex items-center">
+          <button className="bg-black hover:bg-green-400 text-white font-bold py-1 px-3  ml-4 flex items-center">
             <MdUpdate className="mr-2" />
             update patients
           </button>
@@ -100,7 +100,8 @@ export default function AppointmentList() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan="7" className="text-center py-4">Loading...</td>
+                 
+                  <td colSpan="7" className="text-center py-4"><span className="loading loading-bars loading-xs"></span></td>
                 </tr>
               ) : error ? (
                 <tr>

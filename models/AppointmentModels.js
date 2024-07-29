@@ -26,12 +26,12 @@ const AppointmentSchema = new Schema({
         type: String,
         required: true
     },
-    accessCode: { type: String, required: true },
+    
 }, {
     timestamps: true // This will add createdAt and updatedAt fields
 });
 
-AppointmentSchema.index({ patientID: 1, name: 1 });
+
 
 const AppointmentModel = models.Appointment || model('Appointment', AppointmentSchema);
 

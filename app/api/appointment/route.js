@@ -1,7 +1,7 @@
 "use server"
-import AppointmentModel from '../../../../models/AppointmentModels'
+import AppointmentModel from '../../../models/AppointmentModels'
 import { NextResponse } from "next/server";
-import connectDB from '../../../../utils/mongodb';
+import connectDB from '../../../utils/mongodb';
 
 // GET all appointments with pagination
 export async function GET(req) {

@@ -43,11 +43,11 @@ export default function CreateDentist() {
           placeholder="Search Dentists..."
           value={searchQuery}
           onChange={handleSearchChange}
-          className="px-4 py-1 border rounded-full bg-slate-200 h-8 text-white"
+          className="px-4 py-1 border  bg-slate-200 h-8 text-white"
         />
         <BsSearch className="absolute right-44 top-1/2 transform -translate-y-1/2 text-gray-500" />
         <Link href="../../Admin-Dashboard/Dentist">
-        <button className="bg-black hover:bg-orange-400 text-white font-bold py-1 px-4 rounded-full ml-4 flex items-center">
+        <button className="bg-black hover:bg-green-400 text-white font-bold py-1 px-4  ml-4 flex items-center">
   <RiAddLine className="mr-2" />
   Add Dentist
 </button>

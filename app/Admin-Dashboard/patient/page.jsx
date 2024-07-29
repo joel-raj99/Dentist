@@ -127,7 +127,7 @@ export default function PatientSetting() {
           placeholder="Search patient"
           value={searchQuery}
           onChange={handleSearchChange}
-          className="h-8 px-4 py-1 text-black border rounded-full bg-slate-200"
+          className="h-8 px-4 py-1 text-black border  bg-slate-200"
         />
       </div>
 
@@ -280,9 +280,9 @@ export default function PatientSetting() {
           <div className="flex items-center justify-end col-span-3 md:col-span-1">
             <button
               type="submit"
-              className="flex items-center p-2 text-white bg-green-600 rounded cursor-pointer"
+              className="flex items-center p-1 text-white bg-green-600"
             >
-              <MdOutlineBrowserUpdated className="mr-2" /> Update
+              <MdOutlineBrowserUpdated className="mr-2 ml-2" /> Save
             </button>
           </div>
         </form>
