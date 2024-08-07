@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'; // Import useRouter for redirection
 import 'react-toastify/dist/ReactToastify.css'; // Import react-toastify for notifications
 
 export default function Login() {
-  const [emailOrId, setEmailOrId] = useState("");
+  const [emailOrdentistid, setemailOrdentistid] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter(); // Initialize useRouter
 
@@ -17,7 +17,7 @@ export default function Login() {
 
     try {
       // Make a POST request to the backend login API
-      const response = await axios.post("/api/login", { emailOrId, password });
+      const response = await axios.post("/api/login", { emailOrdentistid, password });
       
       // Handle success (e.g., redirect or display success message)
       toast.success("Login successful!",
@@ -55,10 +55,10 @@ export default function Login() {
   };
 
   return (
-    <div className="container">
+    <div className="container -mb-20">
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-6">
-          <Image
+        <Image
             src="/Images1.png"
             alt="First image"
             width={200}
@@ -67,31 +67,31 @@ export default function Login() {
             className="image1"
           />
           <Image
-            src="/dentist-with-smile 1.png"
+            src="/dentist-with-smile (2) 1.png"
             alt="Second image"
             width={700}
-            height={650}
+            height={400}
             quality={100}
             className="image2"
           />
         </div>
-        <div className="flex items-center col-span-6">
-          <div className="w-full h-auto pl-8 card bg-base-100">
+        <div className="items-center h-1 col-span-6 ">
+          <div className="flex w-full pl-8 card bg-base-100">
             <div className="card-body">
               <h1 className="text-4xl font-semibold text-center uppercase">Login</h1>
               <h2 className="mt-4 text-center capitalize card-title">Welcome</h2>
               <p className="text-center">Login into your account</p>
               <form onSubmit={handleSubmit} className="flex flex-col items-start mt-6 gap-y-3">
-                <label htmlFor="emailOrId" className="text-sm font-medium capitalize">
+                <label htmlFor="emailOrdentistid" className="text-sm font-medium capitalize">
                   Email address or ID
                 </label>
                 <input
                   type="text"
-                  id="emailOrId"
-                  name="emailOrId"
+                  id="emailOrdentistid"
+                  name="emailOrdentistid"
                   placeholder="Enter your Email address or ID"
-                  value={emailOrId}
-                  onChange={(e) => setEmailOrId(e.target.value)}
+                  value={emailOrdentistid}
+                  onChange={(e) => setemailOrdentistid(e.target.value)}
                   className="w-full p-4 bg-transparent border border-gray-200 rounded-lg outline-none"
                 />
                 <label htmlFor="password" className="mt-4 text-sm font-medium capitalize">
@@ -106,7 +106,7 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full p-4 bg-transparent border border-gray-200 rounded-lg outline-none"
                 />
-                <button type="submit" className="w-full mt-6 btn btn-primary">Login</button>
+                <button type="submit" className="w-full mt-2 btn btn-primary">Login</button>
               </form>
             </div>
           </div>
