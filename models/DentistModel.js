@@ -1,8 +1,7 @@
-// models/DoctorModel.js
 import { Schema, models, model } from 'mongoose';
 
-const doctorSchema = new Schema({
-  doctorid: {
+const DentistSchema = new Schema({
+  dentistid: {
     type: String,
     required: true,
     unique: true,
@@ -20,7 +19,7 @@ const doctorSchema = new Schema({
     required: true
   },
   phone: {
-    type: Number,
+    type: String, // Changed to string to handle phone numbers more flexibly
     required: true
   },
   email: {
@@ -50,10 +49,6 @@ const doctorSchema = new Schema({
     type: Number,
     required: true
   },
-  qualifications: {
-    type: String,
-    required: true
-  },
   password: {
     type: String,
     required: true,
@@ -62,6 +57,6 @@ const doctorSchema = new Schema({
   timestamps: true
 });
 
-const DoctorModel = models.doctor || model('doctor', doctorSchema);
+const DentistModel = models.Dentist || model('Dentist', DentistSchema);
 
-export default DoctorModel;
+export default DentistModel;

@@ -9,13 +9,26 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-export async function sendmail(email, id, password) {
+export async function sendemail(email, password) {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
     subject: 'Admin Your Account Information',
-    text: `Admin ID: ${id}\nYour Password: ${password}\nYour email :${email}`
+    text: `Your Password: ${password}\nYour email: ${email}`
   };
 
-  await transporter.sendMail(mailOptions);
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
+    return true;
+  } catch (error) {
+    console.error('Error sending email:', error);
+    if (error.response) {
+      console.error('Response:', error.response);
+    }
+    if (error.stack) {
+      console.error('Stack:', error.stack);
+    }
+    return false;
+  }
 }
