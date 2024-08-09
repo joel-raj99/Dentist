@@ -23,6 +23,9 @@ export default function Signup() {
         draggable: true,
         progress: undefined,
       });
+      // Clear input fields after successful submission
+      setName('');
+      setEmail('');
     } catch (error) {
       console.error('Error during signup:', error);
       toast.error(error.response?.data?.message || 'An unexpected error occurred', {

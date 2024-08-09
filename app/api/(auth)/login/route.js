@@ -1,7 +1,7 @@
 "use server";
 import ConnectDB from '../../../../utils/mongodb';
 import Admin from '../../../../models/AdminModel';
-import Dentist from '../../../../models/DentistModel'; 
+import Dentist from '../../../../models/DentistModel';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -60,7 +60,7 @@ export async function POST(req) {
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '30d' });
 
-    return new Response(JSON.stringify({ token }), {
+    return new Response(JSON.stringify({ token ,role }), {
       status: 200,
       headers: {
         'Content-Type': 'application/json'

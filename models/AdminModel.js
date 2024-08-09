@@ -1,6 +1,10 @@
 import { Schema, models, model } from 'mongoose';
 
 const adminSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -10,7 +14,7 @@ const adminSchema = new Schema({
     type: String,
     required: true,
   },
-  // other fields...
+  role: { type: String, default: 'admin' },
 }, {
   timestamps: true
 });
