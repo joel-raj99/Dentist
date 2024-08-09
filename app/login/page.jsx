@@ -34,9 +34,9 @@ export default function Login() {
       
       // Example redirection based on user role
       if (response.data.role === "admin") {
-        router.push("/Admin-Dashboard");
+        router.push("../Admin-Dashboard");
       } else if (response.data.role === "dentist") {
-        router.push("/Doctor-Dashboard");
+        router.push("../Doctor-Dashboard");
       }
     } catch (error) {
       // Handle error (e.g., display error message)
