@@ -1,16 +1,27 @@
+// utils/multerConfig.js
 import multer from 'multer';
 import path from 'path';
 
-// Configure Multer storage
+// Set up storage for uploaded files
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/uploads'); // Directory where images will be stored
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // Change this to your desired upload directory
   },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}${path.extname(file.originalname)}`); // Filename with timestamp
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    cb(null, `${Date.now()}${ext}`);
   },
 });
 
-const upload = multer({ storage: storage });
+// File filter to allow only image files
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image/')) {
+    cb(null, true);
+  } else {
+    cb(new Error('Invalid file type. Only images are allowed.'), false);
+  }
+};
+
+const upload = multer({ storage, fileFilter });
 
 export default upload;

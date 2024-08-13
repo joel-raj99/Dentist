@@ -66,7 +66,7 @@ import mongoose from 'mongoose';
 const DentistSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
-  number: { type: String, required: true },
+  phone: { type: String, required: true },
   Qualification: { type: String, required: true },
   experience: { type: String, required: true },
   treatment: { type: String, required: true },

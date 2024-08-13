@@ -51,7 +51,7 @@ export default function Dentist() {
         throw new Error(`Field ${field} is required`);
       }
     }
-
+  
     if (data.educationList && data.educationList.length > 0) {
       data.educationList.forEach((edu, index) => {
         const requiredEduFields = ['school', 'year', 'Qualification'];
@@ -65,6 +65,7 @@ export default function Dentist() {
       throw new Error('Education list must contain at least one entry');
     }
   };
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
