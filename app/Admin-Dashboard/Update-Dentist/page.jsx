@@ -1,113 +1,11 @@
-// "use server";
-
-// import connectDB from '../../../utils/mongodb';
-// import DentistModel from '../../../models/DentistModel';
-// import hashPassword from '../../../utils/hashPassword';
-// import sendEmail from '../../../utils/sendEmail';
-// import multer from 'multer';
-// import path from 'path';
-// import { NextResponse } from 'next/server';
-
-// // Configure multer
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'public/uploads'); // Define the directory to save the files
-//   },
-//   filename: (req, file, cb) => {
-//     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-//     cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-//   }
-// });
-
-// const upload = multer({ storage: storage });
-
-// // Function to generate a new Dentist ID
-// const generatedentistid = async () => {
-//   const lastDentist = await DentistModel.findOne().sort({ dentistid: -1 });
-
-//   if (lastDentist && lastDentist.dentistid) {
-//     const lastId = parseInt(lastDentist.dentistid.split(' ')[1], 10);
-//     const newId = lastId + 1;
-//     return `DR ${String(newId).padStart(3, '0')}`;
-//   } else {
-//     return 'DR 100';
-//   }
-// };
-
-// // Function to validate form data
-// const validateFormData = (data) => {
-//   const requiredFields = ['name', 'email', 'phone', 'Qualification', 'experience', 'treatment', 'educationList']; // Added required fields
-
-//   for (const field of requiredFields) {
-//     if (!data[field]) {
-//       throw new Error(`Missing required field: ${field}`);
-//     }
-//   }
-// };
-
-// // POST handler
-// export async function POST(req) {
-//   try {
-//     // Use multer to handle file uploads
-//     const form = new FormData();
-//     const file = form.get('profileImage');
-//     let filePath = null;
-
-//     if (file) {
-//       filePath = `/uploads/${file.filename}`;
-//     }
-
-//     const requestData = await req.json();
-
-//     // Validate required fields
-//     validateFormData(requestData);
-
-//     const existingUser = await DentistModel.findOne({ email: requestData.email, name: requestData.name });
-//     if (existingUser) {
-//       return new Response(JSON.stringify({ message: "User already exists" }), { status: 409 });
-//     }
-
-//     const dentistid = await generatedentistid();
-//     const password = Math.random().toString(36).slice(-8);
-//     const hashedPassword = await hashPassword(password);
-
-//     const newDentist = {
-//       ...requestData,
-//       dentistid: dentistid,
-//       password: hashedPassword,
-//       profileImage: filePath || null, // Handle optional field
-//     };
-
-//     const dentistdata = await DentistModel.create(newDentist);
-//     await sendEmail(dentistdata.email, dentistdata.dentistid, password, dentistdata.name);
-
-//     return new Response(JSON.stringify(dentistdata), { status: 201 });
-//   } catch (error) {
-//     console.error('Processing error:', error);
-//     return new Response(JSON.stringify({ message: error.message }), { status: 500 });
-//   }
-// }
-
-// // GET handler
-// export async function GET() {
-//   try {
-//     await connectDB();
-//     const Dentistdata = await DentistModel.find({});
-//     return new Response(JSON.stringify(Dentistdata), { status: 200 });
-//   } catch (error) {
-//     return new Response(JSON.stringify({ message: error.message }), { status: 500 });
-//   }
-// }
-
-
-
 "use client";
 import React, { useState, useRef } from "react";
 import { MdAdd, MdDelete } from "react-icons/md";
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function Dentist() {
+export default function UpdateDentist() {
   const [basicInfo, setBasicInfo] = useState({
     name: "",
     experience: "",
@@ -174,12 +72,14 @@ export default function Dentist() {
     event.preventDefault();
   
     try {
+      // Prepare the education data
       const educationData = educationList.map(edu => ({
         school: edu.school,
         year: edu.year,
-        Qualification: edu.Qualification
+        Qualification: edu.Qualification,
       }));
   
+      // Create a FormData object
       const formData = new FormData();
       formData.append('data', JSON.stringify({
         name: basicInfo.name,
@@ -188,13 +88,15 @@ export default function Dentist() {
         Qualification: basicInfo.Qualification,
         experience: basicInfo.experience,
         treatment: basicInfo.treatment,
-        educationList: educationData
+        educationList: educationData,
       }));
   
+      // Append the profile image if available
       if (basicInfo.profile) {
         formData.append('profileImage', basicInfo.profile);
       }
   
+      // Validate the form data before sending
       validateFormData({
         name: basicInfo.name,
         email: basicInfo.email,
@@ -203,31 +105,34 @@ export default function Dentist() {
         experience: basicInfo.experience,
         treatment: basicInfo.treatment,
         profile: basicInfo.profile ? `/uploads/${basicInfo.profile.name}` : null,
-        educationList: educationData
+        educationList: educationData,
       });
   
-      const response = await fetch('../../api/Dentist', {
-        method: 'POST',
+      // Send the data to the API route
+      const response = await fetch('../../../api/Dentist/[id]', {
+        method: 'PATCH',
         body: formData,
       });
+      
   
-      const result = await response.json();
+      // Handle the server response
       if (response.ok) {
+        const result = await response.json();
         toast.success("Successfully submitted!");
       } else {
-        toast.error(`Error: ${result.message || "An error occurred"}`);
+        const errorResult = await response.json();
+        toast.error(`Error: ${errorResult.message || "An error occurred"}`);
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(`Error: ${error.message}`);
     }
   };
   
-
   return (
     <>
       <div className="p-5 mt-20 ml-52 bg-white rounded-lg shadow-md">
         <div className="flex items-center justify-between mr-4">
-          <h1>Basic info</h1>
+          <h1 className="text capitalize">Basic info</h1>
           <div className="form-control">
             <input
               type="text"
@@ -236,10 +141,11 @@ export default function Dentist() {
               onChange={handleSearchChange}
               className="px-4 py-1 border rounded-full bg-slate-200 h-8 text-white"
             />
+       
           </div>
         </div>
 
-        <form className="grid grid-cols-4 gap-4 mt-2" onSubmit={handleSubmit}>
+        <form className="grid grid-cols-4 gap-4 mt-8" onSubmit={handleSubmit}>
           <div className="col-span-1">
             <label className="block text-gray-700">Name of Doctor</label>
             <input
@@ -428,7 +334,7 @@ export default function Dentist() {
               type="submit"
               className="flex px-4 py-2 font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
-              Submit
+              Update
             </button>
           </div>
           <ToastContainer />

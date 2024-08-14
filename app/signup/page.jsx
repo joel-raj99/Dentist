@@ -13,7 +13,7 @@ export default function Signup() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/api/signup', { name, email });
+      const response = await axios.post('../api/(auth)/signup', { name, email });
       toast.success(response.data.message, {
         position: "top-center",
         autoClose: 3000,
