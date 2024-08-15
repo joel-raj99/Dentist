@@ -3,7 +3,7 @@ import moment from "moment";
 
 
 const PatientSchema = new Schema({
-    patientID: {
+    patientid: {
         type: String,
         required: true
     },

@@ -2,12 +2,13 @@
 import { MdOutlineBrowserUpdated } from "react-icons/md";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function PatientSetting() {
   const [searchQuery, setSearchQuery] = useState("");
   const [patients, setPatients] = useState([]);
   const [formData, setFormData] = useState({
-    patientId: "",
+    patientid: "",
     name: "",
     email: "",
     dob: "",
@@ -51,7 +52,7 @@ export default function PatientSetting() {
     setSearchQuery(query);
 
     if (query) {
-      const patient = patients.find((p) => p.patientID === query);
+      const patient = patients.find((p) => p.patientid === query);
       if (patient) {
         handlePatientSelect(patient);
       } else {
@@ -64,7 +65,7 @@ export default function PatientSetting() {
 
   const handlePatientSelect = (patient) => {
     setFormData({
-      patientId: patient.patientID,
+      patientid: patient.patientid,
       name: patient.name,
       email: patient.email,
       dob: patient.dob,
@@ -81,7 +82,7 @@ export default function PatientSetting() {
 
   const clearFormData = () => {
     setFormData({
-      patientId: "",
+      patientid: "",
       name: "",
       email: "",
       dob: "",
@@ -98,23 +99,22 @@ export default function PatientSetting() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const updatedFormData = {
       ...formData,
       dob: formData.dob
     };
-
-    console.log("Submitting form data:", updatedFormData);
-
+  
     try {
-      await axios.patch(`/api/patient/${patients}`, updatedFormData);
-      console.log(updatedFormData)
-      alert("Patient updated successfully");
+      // Use the correct patient ID in the PATCH request URL
+      await axios.patch(`/api/patient/${formData.patientid}`, updatedFormData);
+      toast.success("Patient updated successfully");
     } catch (error) {
       console.error("Error updating patient data:", error);
-      alert("Failed to update patient");
+      toast.error("Failed to update patient");
     }
   };
+  
 
   return (
     <div className="grid grid-cols-1 gap-5 p-5 mt-12 ml-56 md:grid-cols-4">
@@ -134,12 +134,12 @@ export default function PatientSetting() {
       <div className="col-span-1 md:col-span-4">
         <form className="grid grid-cols-1 gap-5 md:grid-cols-3" onSubmit={handleSubmit}>
           <div className="col-span-1">
-            <label htmlFor="patientId">Patient ID</label>
+            <label htmlFor="patientid">Patient ID</label>
             <input
               type="text"
-              id="patientId"
-              name="patientId"
-              value={formData.patientId}
+              id="patientid"
+              name="patientid"
+              value={formData.patientid}
               onChange={handleInputChange}
               className="w-full p-2 border border-gray-300 rounded"
             />
@@ -286,6 +286,7 @@ export default function PatientSetting() {
             </button>
           </div>
         </form>
+        < ToastContainer/>
       </div>
     </div>
   );

@@ -4,33 +4,33 @@ import { NextResponse } from "next/server";
 import connectDB from '../../../utils/mongodb';
 
 // GET all appointments with pagination
-export async function GET(req) {
-    try {
-        await connectDB();
+// export async function GET(req) {
+//     try {
+//         await connectDB();
         
-        // Extract page and limit from query parameters
-        const { searchParams } = new URL(req.url);
-        const page = parseInt(searchParams.get('page')) || 1;
-        const limit = parseInt(searchParams.get('limit')) || 10;
-        const skip = (page - 1) * limit;
+//         // Extract page and limit from query parameters
+//         const { searchParams } = new URL(req.url);
+//         const page = parseInt(searchParams.get('page')) || 1;
+//         const limit = parseInt(searchParams.get('limit')) || 10;
+//         const skip = (page - 1) * limit;
         
-        const appointmentData = await AppointmentModel.find({})
-            .skip(skip)
-            .limit(limit);
+//         const appointmentData = await AppointmentModel.find({})
+//             .skip(skip)
+//             .limit(limit);
         
-        const totalDocuments = await AppointmentModel.countDocuments();
-        const totalPages = Math.ceil(totalDocuments / limit);
+//         const totalDocuments = await AppointmentModel.countDocuments();
+//         const totalPages = Math.ceil(totalDocuments / limit);
 
-        return NextResponse.json({ 
-            data: appointmentData,
-            currentPage: page,
-            totalPages: totalPages,
-            totalDocuments: totalDocuments,
-        }, { status: 200 });
-    } catch (error) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
-    }
-}
+//         return NextResponse.json({ 
+//             data: appointmentData,
+//             currentPage: page,
+//             totalPages: totalPages,
+//             totalDocuments: totalDocuments,
+//         }, { status: 200 });
+//     } catch (error) {
+//         return NextResponse.json({ message: error.message }, { status: 500 });
+//     }
+// }
 
 // POST a new appointment
 export async function POST(req) {
@@ -74,3 +74,15 @@ export async function DELETE(request) {
         return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }
+
+//get all appointment
+export async function GET(req) {
+    try {
+        await connectDB();
+        const appointmentData = await AppointmentModel.find({});
+        return NextResponse.json({ data: appointmentData }, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ message: error.message }, { status: 500 });
+    }
+}
+

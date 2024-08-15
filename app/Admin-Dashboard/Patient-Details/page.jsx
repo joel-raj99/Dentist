@@ -94,7 +94,7 @@ export default function AppointmentList() {
                 <th className="px-5 py-2">Doctor Name</th>
                 <th className="px-5 py-2">Appointment Date</th>
                 <th className="px-5 py-2">Treatment</th>
-                <th className="px-5 py-2">Action</th>
+                {/* <th className="px-5 py-2">Action</th> */}
               </tr>
             </thead>
             <tbody>
@@ -109,14 +109,14 @@ export default function AppointmentList() {
                 </tr>
               ) : filteredAppointments.length > 0 ? (
                 filteredAppointments.map((appointment, index) => (
-                  <tr key={index} className="bg-white my-2 p-4">
+                  <tr key={index} className="bg-white my-2 p-4 justify-center align-middle">
                     <td className="border px-6 py-2">{index + 1}</td>
                     <td className="border px-4 py-2">{appointment.patientId}</td>
                     <td className="border px-4 py-2">{appointment.name}</td>
                     <td className="border px-4 py-2">{appointment.doctorName}</td>
                     <td className="border px-4 py-2">{appointment.appointmentDate}</td>
                     <td className="border px-4 py-2">{appointment.treatment}</td>
-                    <td className="border px-4 py-2 flex">
+                    {/* <td className="border px-4 py-2 flex">
                       <button className="text-red-500 px-2 py-1 rounded" onClick={() => handleDeleteAppointment(appointment._id)}>
                         <FaRegTrashAlt />
                       </button>
@@ -125,7 +125,7 @@ export default function AppointmentList() {
                           <FiEdit />
                         </p>
                       </Link>
-                    </td>
+                    </td> */}
                   </tr>
                 ))
               ) : (
