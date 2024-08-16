@@ -72,7 +72,7 @@ export default function CreateDentist() {
 
   return (
     <div>
-      <div className="flex justify-end items-center mr-4 mt-14 relative">
+      <div className="flex justify-end items-center mr-4 mt-20 relative">
         <input
           type="text"
           placeholder="Search by dentist ID..."
@@ -141,7 +141,7 @@ export default function CreateDentist() {
                       >
                         <FaRegTrashAlt />
                       </button>
-                      <Link href={`./Dentist/${dentist._id}`}>
+                      <Link href={`../../Admin-Dashboard/Update-Dentist`}>
                         <p className="text-black px-2 py-1 rounded ml-2 flex items-center">
                           <FiEdit />
                         </p>

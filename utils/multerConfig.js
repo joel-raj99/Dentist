@@ -1,19 +1,29 @@
-// lib/multer.js
+// utils/multer.js
 import multer from 'multer';
 import path from 'path';
 
-// Define storage for multer
+// Configure storage options
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/uploads'); // Define the directory to save the files
+    cb(null, 'public/uploads'); // Adjust the path as needed
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-  }
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
 });
 
-// Initialize multer with the storage configuration
-const upload = multer({ storage: storage });
+// Create multer instance
+const upload = multer({
+  storage,
+  fileFilter: (req, file, cb) => {
+    const filetypes = /jpeg|jpg|png|gif/;
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = filetypes.test(file.mimetype);
+    if (mimetype && extname) {
+      return cb(null, true);
+    }
+    cb(new Error('Invalid file type'));
+  },
+});
 
 export default upload;

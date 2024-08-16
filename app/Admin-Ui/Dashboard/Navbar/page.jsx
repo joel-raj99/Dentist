@@ -21,7 +21,7 @@ export default function Navbar() {
   const [fontSize, setFontSize] = useState(16);
 
   // State variable for search input
-  const [searchQuery, setSearchQuery] = useState("");
+  // const [searchQuery, setSearchQuery] = useState("");
 
   // Load settings from local storage
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function Navbar() {
         </div>
 
         {/* Centered Search Bar */}
-        <div className="flex items-center justify-center">
+        {/* <div className="flex items-center justify-center">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -85,7 +85,7 @@ export default function Navbar() {
             />
             <TbZoom className="absolute text-gray-500 transform -translate-y-1/2 right-3 top-1/2" />
           </form>
-        </div>
+        </div> */}
 
         <div className="flex items-start space-x-2">
           {/* Dashboard Icon */}
@@ -161,12 +161,12 @@ export default function Navbar() {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a className="justify-between">
+                <a className="justify-between" href="../../../Admin-Dashboard/Admin-profile">
                   Profile
-                  <span className="badge">New</span>
+                  
                 </a>
               </li>
-              <li><a>Settings</a></li>
+              <li><a href="../../../Admin-Dashboard/Clinic-settings">Settings</a></li>
               <li><a>Logout</a></li>
             </ul>
           </div>
