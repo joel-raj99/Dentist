@@ -18,6 +18,10 @@ const adminprofileSchema = new Schema({
         type: Number,
         required: true,
     },
+    secondaryNumber:{
+        type: Number,
+        required: true,
+    },
     age: {
         type: Number,
         required: true,
@@ -34,7 +38,7 @@ const adminprofileSchema = new Schema({
         type: String,
         required: true,
     },
-    profile: {
+    profileImage: {
         type: String,
         required: true,
     },
@@ -51,10 +55,7 @@ const adminprofileSchema = new Schema({
         type: String,
         required: true,
     },
-    imageUrl: { // New field for storing the Cloudinary image URL
-        type: String,
-        required: false, // Optional field
-    }
+   
 }, {
     timestamps: true
 });

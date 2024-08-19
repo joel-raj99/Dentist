@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useState } from "react";
@@ -21,6 +19,10 @@ export default function Login() {
       // Make a POST request to the backend login API
       const response = await axios.post("/api/login", { emailOrdentistid, password });
       
+      // Store auth token and role in sessionStorage
+      sessionStorage.setItem('authToken', response.data.token);
+      sessionStorage.setItem('authRole', response.data.role);
+
       // Handle success (e.g., redirect or display success message)
       toast.success("Login successful!",
         {
@@ -60,7 +62,7 @@ export default function Login() {
     <div className="container -mb-20">
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-6">
-        <Image
+          <Image
             src="/Images1.png"
             alt="First image"
             width={200}

@@ -1,142 +1,122 @@
 // "use server";
-// import ConnectDB from "../../../utils/mongodb";
-// import AdminProfile from "../../../models/AdminProfileModel";
-// import { NextResponse } from "next/server";
-// import cloudinary from "cloudinary";
 
-// // Configure Cloudinary
-// cloudinary.v2.config({
-//     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//     api_key: process.env.CLOUDINARY_API_KEY,
-//     api_secret: process.env.CLOUDINARY_API_SECRET,
-// });
+// import connectDB from '../../../utils/mongodb';
+// import AdminProfileModel from '../../../models/AdminProfileModel';
+// import multer from 'multer';
+// import { NextResponse } from 'next/server';
 
-// export async function POST(req, res) {
-//     try {
-//         await ConnectDB();
+// // Connect to MongoDB
+// await connectDB();
 
-//         // Parse JSON request body
-//         const body = await req.json();
+// // Configure multer for file upload
+// const upload = multer({ dest: 'uploads/' });
 
-//         // Validate input data
-//         if (!body.email || !body.name || !body.Qualification || !body.phone || !body.age || !body.gender || !body.dateofbirth || !body.address || !body.profile || !body.city || !body.state || !body.image) {
-//             return new NextResponse("Invalid request data", { status: 400 });
-//         }
+// export async function POST(req) {
+//   // Use a promise to wrap the multer upload middleware
+//   await new Promise((resolve, reject) => {
+//     upload.single('profileImage')(req, {}, (err) => {
+//       if (err) reject(err);
+//       else resolve();
+//     });
+//   });
 
-//         // Check if email already exists in the database
-//         const existingAdminProfile = await AdminProfile.findOne({ email: body.email });
-//         if (existingAdminProfile) {
-//             return new NextResponse("Email already exists", { status: 409 });
-//         }
-
-//         // Upload image to Cloudinary
-//         const uploadResult = await cloudinary.v2.uploader.upload(body.image, {
-//             folder: "admin_profiles", // Optional: specify a folder in Cloudinary
-//         });
-
-//         // Create a new admin profile document
-//         const newAdminProfile = new AdminProfile({
-//             name: body.name,
-//             email: body.email,
-//             Qualification: body.Qualification,
-//             phone: body.phone,
-//             age: body.age,
-//             gender: body.gender,
-//             dateofbirth: body.dateofbirth,
-//             address: body.address,
-//             profile: body.profile,
-//             city: body.city,
-//             state: body.state,
-//             experienceList: body.experienceList,
-//             imageUrl: uploadResult.secure_url, // Save Cloudinary image URL
-//         });
-
-//         // Save the new admin profile document to the database
-//         await newAdminProfile.save()
-//             .then(() => {
-//                 return new NextResponse(JSON.stringify({ message: "Admin profile created successfully" }), { status: 201 });
-//             })
-//             .catch((error) => {
-//                 console.error("Error creating admin profile:", error);
-//                 return new NextResponse(JSON.stringify({ message: "Failed to create admin profile" }), { status: 500 });
-//             });
-
-//     } catch (error) {
-//         console.error("Server error:", error);
-//         return new NextResponse(JSON.stringify({ message: "Server error" }), { status: 500 });
+//   try {
+//     const { file, body } = req;
+//     if (!file) {
+//       return NextResponse.json({ message: 'No file uploaded' }, { status: 400 });
 //     }
+
+//     const experienceList = JSON.parse(body.experienceList);
+
+//     const adminProfile = new AdminProfileModel({
+//       name: body.name,
+//       email: body.email,
+//       Qualification: body.Qualification,
+//       experience: body.experience,
+//       gender: body.gender,
+//       age: body.age,
+//       dateofbirth: body.dateofbirth,
+//       city: body.city,
+//       profileImage: `/uploads/${file.filename}`, // Path to the uploaded image
+//       phoneNumber: body.phoneNumber,
+//       address: body.address,
+//       secondaryNumber: body.secondaryNumber,
+//       state: body.state,
+//       experienceList, // Assign parsed array
+//     });
+
+//     await adminProfile.save();
+
+//     return NextResponse.json({ message: 'Admin profile created successfully', data: adminProfile }, { status: 201 });
+//   } catch (error) {
+//     return NextResponse.json({ message: 'Failed to create admin profile', error: error.message }, { status: 500 });
+//   }
 // }
 
 
 "use server";
-import ConnectDB from "../../../utils/mongodb";
-import AdminProfile from "../../../models/AdminProfileModel";
-import { NextResponse } from "next/server";
-import formidable from "formidable";
-import fs from "fs";
-import cloudinary from "cloudinary";
 
-// Configure Cloudinary
-cloudinary.v2.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+import connectDB from '../../../utils/mongodb';
+import AdminProfileModel from '../../../models/AdminProfileModel';
+import { NextResponse } from 'next/server';
+import { promises as fs } from 'fs';
+import path from 'path';
+
+// Connect to MongoDB
+await connectDB();
 
 export async function POST(req) {
   try {
-    await ConnectDB();
+    const formData = await req.formData();
+    const file = formData.get('profileImage');
 
-    // Use formidable to parse the form data
-    const form = new formidable.IncomingForm();
-    form.uploadDir = "./uploads";
-    form.keepExtensions = true;
+    if (!file) {
+      return NextResponse.json({ message: 'No file uploaded' }, { status: 400 });
+    }
+
+    // Save the file to a directory
+    const buffer = await file.arrayBuffer();
+    const fileName = `${Date.now()}-${file.name}`;
+    const filePath = path.join(process.cwd(), 'uploads', fileName);
     
-    return new Promise((resolve, reject) => {
-      form.parse(req, async (err, fields, files) => {
-        if (err) {
-          console.error("Form parsing error:", err);
-          return reject(new NextResponse("Server error", { status: 500 }));
-        }
+    await fs.writeFile(filePath, Buffer.from(buffer));
 
-        try {
-          const data = JSON.parse(fields.data[0]);
+    // Extract other fields from formData
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const Qualification = formData.get('Qualification');
+    const experience = formData.get('experience');
+    const gender = formData.get('gender');
+    const age = formData.get('age');
+    const dateofbirth = formData.get('dateofbirth');
+    const city = formData.get('city');
+    const phoneNumber = formData.get('phoneNumber');
+    const address = formData.get('address');
+    const secondaryNumber = formData.get('secondaryNumber');
+    const state = formData.get('state');
+    const experienceList = JSON.parse(formData.get('experienceList'));
 
-          // Validate form data
-          if (!data.name || !data.email) {
-            return resolve(new NextResponse("Invalid request data", { status: 400 }));
-          }
-
-          // Handle profile image upload
-          let imageUrl = null;
-          if (files.profileImage && files.profileImage[0]) {
-            const filePath = files.profileImage[0].filepath;
-            const uploadResult = await cloudinary.v2.uploader.upload(filePath, {
-              folder: "admin_profiles",
-            });
-            imageUrl = uploadResult.secure_url;
-            fs.unlinkSync(filePath); // Clean up the uploaded file
-          }
-
-          // Create a new admin profile document
-          const newAdminProfile = new AdminProfile({
-            ...data,
-            profile: imageUrl,
-          });
-
-          // Save the new admin profile document to the database
-          await newAdminProfile.save();
-
-          resolve(new NextResponse(JSON.stringify({ message: "Admin profile created successfully" }), { status: 201 }));
-        } catch (error) {
-          console.error("Server error:", error);
-          resolve(new NextResponse(JSON.stringify({ message: "Server error" }), { status: 500 }));
-        }
-      });
+    const adminProfile = new AdminProfileModel({
+      name,
+      email,
+      Qualification,
+      experience,
+      gender,
+      age,
+      dateofbirth,
+      city,
+      profileImage: `/uploads/${fileName}`, // Path to the uploaded image
+      phoneNumber,
+      address,
+      secondaryNumber,
+      state,
+      experienceList, // Assign parsed array
     });
 
+    await adminProfile.save();
+
+    return NextResponse.json({ message: 'Admin profile created successfully', data: adminProfile }, { status: 201 });
   } catch (error) {
-    console.error("Server error:", error);
-    return new NextResponse("Server error", { status: 500 });
+    return NextResponse.json({ message: 'Failed to create admin profile', error: error.message }, { status: 500 });
   }
 }

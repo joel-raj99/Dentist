@@ -119,7 +119,7 @@ export default function Dentist() {
         formData.append("profileImage", basicInfo.profile);
       }
   
-      const response = await fetch("/api/adminprofile", {
+      const response = await fetch("../../api/adminprofile", {
         method: "POST",
         body: formData,
         // No need to set Content-Type header; FormData sets it automatically
@@ -302,7 +302,7 @@ export default function Dentist() {
                 className="flex items-center justify-center gap-2 px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600"
               >
                 <MdAdd />
-                Add Experience
+                Add 
               </button>
             </div>
 
@@ -323,7 +323,7 @@ export default function Dentist() {
                   />
                 </div>
                 <div className="col-span-1">
-                  <label className="block text-gray-700">
+                  <label className="block text-gray-700 ml-16" >
                     Year of Experience
                   </label>
                   <input
@@ -332,18 +332,18 @@ export default function Dentist() {
                     onChange={(e) =>
                       handleUpdateExperience(index, "experience", e.target.value)
                     }
-                    className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="block w-full px-3 py-2 mt-1 ml-12 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
                 <div className="col-span-1">
-                  <label className="block text-gray-700">Domain</label>
+                  <label className="block text-gray-700 ml-20">Domain</label>
                   <input
                     type="text"
                     value={exp.domain}
                     onChange={(e) =>
                       handleUpdateExperience(index, "domain", e.target.value)
                     }
-                    className="block w-full px-3 py-2 mt-1 border capitalize rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="block w-full px-3 py-2 ml-20 mt-1 border capitalize rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
                 <div className="col-span-1 flex items-end">
@@ -354,24 +354,25 @@ export default function Dentist() {
                         experienceList.filter((_, i) => i !== index)
                       )
                     }
-                    className="flex items-center justify-center gap-2 px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
+                    className="flex items-center justify-center gap-2 px-4 py-2 ml-32 text-white bg-red-500 rounded-md hover:bg-red-600"
                   >
                     <MdDelete />
-                    Remove
+                  
                   </button>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="col-span-4 mt-8">
-            <button
-              type="submit"
-              className="px-6 py-3 text-white bg-blue-600 rounded-md hover:bg-blue-700"
-            >
-              Submit
-            </button>
-          </div>
+          <div className="col-span-4 mt-8 flex justify-end">
+  <button
+    type="submit"
+    className="px-6 py-3 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+  >
+    Submit
+  </button>
+</div>
+
         </form>
       </div>
       <ToastContainer />

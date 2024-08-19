@@ -40,6 +40,7 @@ const menuItems = [
         path: "/Admin-Dashboard/Clinic-settings",
         icon: <BsGear />,
       },
+      
     ]
   }
 ]
